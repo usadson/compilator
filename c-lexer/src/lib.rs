@@ -7,6 +7,7 @@ mod token;
 pub use self::{
     lexer::Lexer,
     token::{
+        IdentifierIsNotAKeyword,
         Keyword,
         PreprocessorToken,
         PreprocessorTokenKind,

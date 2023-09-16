@@ -6,7 +6,10 @@ mod preprocessor;
 mod punctuator;
 
 pub use self::{
-    keyword::Keyword,
+    keyword::{
+        IdentifierIsNotAKeyword,
+        Keyword,
+    },
     preprocessor::{
         PreprocessorToken,
         PreprocessorTokenKind,

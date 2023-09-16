@@ -7,6 +7,7 @@ use std::{
 };
 
 use crate::{
+    IdentifierIsNotAKeyword,
     Punctuator,
     Token,
     TokenKind,
@@ -55,7 +56,10 @@ impl TryFrom<PreprocessorTokenKind> for TokenKind {
         match value {
             PreprocessorTokenKind::Whitespace(..) => Err(PreprocessorTokenNotMappedToTokenError),
             PreprocessorTokenKind::HeaderName => Err(PreprocessorTokenNotMappedToTokenError),
-            PreprocessorTokenKind::Identifier(ident) => Ok(TokenKind::Identifier(ident)),
+            PreprocessorTokenKind::Identifier(ident) => match ident.parse() {
+                Ok(keyword) => Ok(TokenKind::Keyword(keyword)),
+                Err(IdentifierIsNotAKeyword) => Ok(TokenKind::Identifier(ident)),
+            }
             PreprocessorTokenKind::PpNumber => todo!(),
             PreprocessorTokenKind::CharacterConstant => todo!(),
             PreprocessorTokenKind::StringLiteral(string_literal) => Ok(TokenKind::StringLiteral(string_literal)),
